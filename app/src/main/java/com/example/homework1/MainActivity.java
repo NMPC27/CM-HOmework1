@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -37,10 +38,28 @@ public class MainActivity extends AppCompatActivity {
     Button sd2;
     Button sd3;
 
-
+    String bsd1="Na";
+    String bsd2="Na";
+    String bsd3="Na";
 
 
     static int PERMISSION_CODE= 100;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                String pNumber = data.getStringExtra("nome");
+                sd1.setText(pNumber);
+                bsd1 = data.getStringExtra("number");
+
+            }
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         sd3 = findViewById(R.id.SD3);
 
 
+
+
         if (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.CALL_PHONE},PERMISSION_CODE);
         }
@@ -86,24 +107,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String buttonText = ((Button)v).getText().toString();
-
-                if (buttonText!="Na"){
+                if (bsd1!="Na"){
                     Intent i = new Intent(Intent.ACTION_CALL);
-                    i.setData(Uri.parse("tel:"+buttonText));
+                    i.setData(Uri.parse("tel:"+bsd1));
                     startActivity(i);
                 }
             }
+
         });
 
         sd1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                Log.d("DEBUG","HO");
+                Intent intent = new Intent(MainActivity.this, AddContact.class);
+                startActivityForResult(intent, 1);
 
-                String str_teleNum = teleNum.getText().toString();
-                sd1.setText(str_teleNum);
-
-                return true;
+                return false;
             }
         });
 
@@ -111,11 +131,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String buttonText = ((Button)v).getText().toString();
-
-                if (buttonText!="Na"){
+                if (bsd2!="Na"){
                     Intent i = new Intent(Intent.ACTION_CALL);
-                    i.setData(Uri.parse("tel:"+buttonText));
+                    i.setData(Uri.parse("tel:"+bsd2));
                     startActivity(i);
                 }
             }
@@ -136,11 +154,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String buttonText = ((Button)v).getText().toString();
-
-                if (buttonText!="Na"){
+                if (bsd3!="Na"){
                     Intent i = new Intent(Intent.ACTION_CALL);
-                    i.setData(Uri.parse("tel:"+buttonText));
+                    i.setData(Uri.parse("tel:"+bsd3));
                     startActivity(i);
                 }
             }
