@@ -49,14 +49,23 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
                 String pNumber = data.getStringExtra("nome");
                 sd1.setText(pNumber);
                 bsd1 = data.getStringExtra("number");
-
             }
+            if (requestCode == 2) {
+                String pNumber = data.getStringExtra("nome");
+                sd2.setText(pNumber);
+                bsd2 = data.getStringExtra("number");
+            }
+            if (requestCode == 3) {
+                String pNumber = data.getStringExtra("nome");
+                sd3.setText(pNumber);
+                bsd3 = data.getStringExtra("number");
+            }
+
         }
     }
 
@@ -119,11 +128,11 @@ public class MainActivity extends AppCompatActivity {
         sd1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Log.d("DEBUG","HO");
+
                 Intent intent = new Intent(MainActivity.this, AddContact.class);
                 startActivityForResult(intent, 1);
 
-                return false;
+                return true;
             }
         });
 
@@ -143,8 +152,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
 
-                String str_teleNum = teleNum.getText().toString();
-                sd2.setText(str_teleNum);
+                Intent intent = new Intent(MainActivity.this, AddContact.class);
+                startActivityForResult(intent, 2);
 
                 return true;
             }
@@ -166,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
 
-                String str_teleNum = teleNum.getText().toString();
-                sd3.setText(str_teleNum);
+                Intent intent = new Intent(MainActivity.this, AddContact.class);
+                startActivityForResult(intent, 3);
 
                 return true;
             }
